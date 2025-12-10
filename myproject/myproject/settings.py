@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-!bgx=zf(u8!mpx(37on&sgsr7p7)viec+k5)tv6zwwajqvwjy_
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["firstapp-gsjf.onrender.com"]
+ALLOWED_HOSTS = ["firstapp-gsjf.onrender.com","127.0.0.1"]
 
 
 # Application definition
