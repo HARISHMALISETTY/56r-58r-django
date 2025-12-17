@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 import math 
+import json
+from django.views.decorators.csrf import csrf_exempt
+from basic.models import userProfile,Employee
+from django.db.utils import IntegrityError
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -66,4 +70,35 @@ def pagination(request):
     res={"status":"success","current_page":page,"total_pages":total_pages,"data":result}
     return JsonResponse(res,status=302)
 
+@csrf_exempt
+def createData(request):
+    try:
+        if request.method=="POST":
+            data=json.loads(request.body) #dictionary
+            name=data.get("name") #taking name property from dict
+            age=data.get("age") #taking age property from dict
+            city=data.get("city") #taking city property from dict
+            userProfile.objects.create(name=name,age=age,city=city)
+            print(data)
+        return JsonResponse({"status":"success","data":data,"statuscode":201},status=201)
+    except Exception as e:
+        return JsonResponse({"statuscode":500,"message":"internal server error"})
 
+@csrf_exempt
+def createProduct(request):
+    if request.method=="POST":
+        data=json.loads(request.body)
+        print(data)
+    return JsonResponse({"status":"success","data":data,"statuscode":201})
+@csrf_exempt
+def createEmployee(request):
+    try:
+        if request.method=="POST":
+            data=json.loads(request.body)
+            print(data)
+            Employee.objects.create(emp_name=data.get("name"),emp_salary=data.get("sal"),emp_email=data.get("email"))
+        return JsonResponse({"status":"success","data":data,"statuscode":201},status=201)
+    except IntegrityError as e:        
+        return JsonResponse({"status":"error","message":"inputs are invalid or not acceptable"},status=400)
+    finally:
+        print("done")
