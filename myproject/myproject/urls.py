@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from basic.views import createEmployee,createProduct,createData,pagination,home,about,sample,sample1,productInfo,filteringData,filterStudentsByCity
-from newapp.views import orderPlacing
+from newapp.views import orderPlacing,BookMyshow,GetOrders,BookingDetails,getStudentById
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',home,name='home'),
@@ -31,5 +31,19 @@ urlpatterns = [
     path('create/',createData),
     path('productcreate/',createProduct),
     path('emp/',createEmployee),
-    path('order/',orderPlacing)
+    path('order/',orderPlacing),
+    path('bookticket/',BookMyshow),
+    path('getOrders/',GetOrders),
+    path('getBookings/',BookingDetails),
+    path('getStudent/<int:id>',getStudentById)
 ]
+
+
+# url/?key=value---->request.GET.get("key") 
+# url/value--->
+# this we can read at the url path-->urlpath/<int:id>
+#                                 -->urlpath/<str:ctg>
+
+
+
+
