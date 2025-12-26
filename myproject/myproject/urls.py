@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from basic.views import createEmployee,createProduct,createData,pagination,home,about,sample,sample1,productInfo,filteringData,filterStudentsByCity
-from newapp.views import orderPlacing,BookMyshow,GetOrders,BookingDetails,getStudentById
+from newapp.views import getMultiplesOrdersByStatus,getStudentsByDegree,orderPlacing,BookMyshow,GetOrders,BookingDetails,getStudentById,getOrdersByStatus
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/',home,name='home'),
@@ -35,7 +35,10 @@ urlpatterns = [
     path('bookticket/',BookMyshow),
     path('getOrders/',GetOrders),
     path('getBookings/',BookingDetails),
-    path('getStudent/<int:id>',getStudentById)
+    path('getStudent/<int:id>',getStudentById),
+    path('getStudentsByDegree/<str:deg>',getStudentsByDegree),
+    path('orderByStatus/<str:status_param>',getOrdersByStatus),
+    path('orders/<str:status>',getMultiplesOrdersByStatus)
 ]
 
 

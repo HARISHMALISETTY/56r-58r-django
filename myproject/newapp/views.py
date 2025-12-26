@@ -77,7 +77,10 @@ def BookMyshow(request):
 
 
 
-student_info=[{"id":1,"name":"vasanth"},{"id":2,"name":"krishna"},{"id":3,"name":"kiran"}]
+student_info=[{"id":1,"name":"vasanth","degree":"EEE"},
+{"id":2,"name":"krishna","degree":"ECE"},
+{"id":3,"name":"kiran","degree":"CSE"},
+{"id":4,"name":"Anvesh","degree":"EEE"}]
 
 def getStudentById(request,id):
     filteredStudent=[]
@@ -88,8 +91,61 @@ def getStudentById(request,id):
 
     return JsonResponse({"data":filteredStudent})
 
-    
+@csrf_exempt
+def getStudentsByDegree(request,deg):
+    try:
+        if request.method=="GET":
+            DegreeBasedFilteration=[]
+            for student in student_info:
+                if deg.lower()== student["degree"].lower():
+                    DegreeBasedFilteration.append(student)
+            if len(DegreeBasedFilteration)==0:
+                msg="no records found"
+            else:
+                msg="students record fetched successfully"
+            return JsonResponse(
+                {"status":"success",
+                "no.of records":len(DegreeBasedFilteration),
+                "data":DegreeBasedFilteration,
+                "msg":msg
+                },status=200)
+        return JsonResponse({"status":"failure","message":"only get method is allowed"},status=400)
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong, check the code once"})
 
+
+#if we are expecting only single record is available
+def getOrdersByStatus(request,status_param):
+    try:
+        if request.method=="GET":
+            data=OrderDetails.objects.get(status=status_param) #it will works if we have only single object 
+            print(data.orderid)
+            print(data.mode)
+            ResponseObject={"id":data.orderid,"amount":data.amount,"mode":data.mode}
+            return JsonResponse({"status":"success","msg":"records fetched successfully","data":ResponseObject},status=200)
+        return JsonResponse({"status":"failure","msg":"only get method is allowed"},status=400)
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong"},status=500)
+
+
+#if we are expecting multiple records based on filteration
+
+def getMultiplesOrdersByStatus(request,status):
+    try:
+        if request.method=="GET":
+            print(status)
+
+            data=(OrderDetails.objects.filter(status=status))
+            final=list(data.values("id","useremail","orderid","amount","currency","transaction_id")) 
+            if len(final)==0:
+                msg="no records found"
+            else:
+                msg="records fetched successfully"
+            return JsonResponse({"status":"success","no.of records":len(final),"msg":msg,"data":final},status=200)
+        return JsonResponse({"status":"failure","msg":"only get method is allowed"},status=400)
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong"},status=500)
+        
 
 
 
