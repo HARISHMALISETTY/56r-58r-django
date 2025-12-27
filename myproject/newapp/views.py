@@ -145,9 +145,33 @@ def getMultiplesOrdersByStatus(request,status):
         return JsonResponse({"status":"failure","msg":"only get method is allowed"},status=400)
     except Exception as e:
         return JsonResponse({"status":"error","msg":"something went wrong"},status=500)
+
+def getMoviesByScreenname(request,screen):
+    try:
+        if request.method=="GET":
+            data=MovieBooking.objects.filter(screenname=screen).values()           
+            final_data=list(data) 
+            if len(final_data)==0:
+                msg="no records found"
+            else:
+                msg="Records fetched successfully"          
+            return JsonResponse({"status":"success","msg":msg,screen:final_data},status=200)
+        return JsonResponse({"status":"failure","msg":"only get method allowed"},status=400)
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong"})
+
         
-
-
+def getMoviesByMultipleScreens(request,first,second):
+    try:
+        if request.method=="GET":
+            data1=MovieBooking.objects.filter(screenname=first).values()
+            data2=MovieBooking.objects.filter(screenname=second).values()
+            first_data=list(data1)
+            second_data=list(data2)            
+            return JsonResponse({"status":"success",first:first_data,second:second_data},status=200)
+        return JsonResponse({"status":"failure","msg":"only get method allowed"},status=400)
+    except Exception as e:
+        return JsonResponse({"status":"error","msg":"something went wrong"})
 
 # {"order_id":"ord1","email":"harish123@gmail.com","amount":2500.50,"status":"success","mode":"paytm"}
 

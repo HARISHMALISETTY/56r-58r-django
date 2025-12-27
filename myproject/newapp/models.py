@@ -18,6 +18,7 @@ class MovieBooking(models.Model):
     screenname=models.CharField(max_length=100)
     dateandtime=models.DateTimeField(auto_now_add=True)
     transaction_id=models.UUIDField(default=uuid.uuid4,editable=False,unique=True)
+    
 
     
 # {"useremail","orderid","amount","mode","status",""}
