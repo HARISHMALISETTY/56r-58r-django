@@ -1,107 +1,141 @@
-# # regex or regular expressions
-
-# x=12345
-# y=25.45
-# a="hello"
-# ip="har123...123com"
-
-# #regex is used to validate,extract,replace a specifc patterns.
-
-# pancardnum="kihjo3987r"
-
-# "5alpahabes4numberssinglealphabet"
-# r"[a-z]{5}[0-9]{4}[a-z]{1}"
-
-# match()
-# search()
-# fullmatch()
-# find()
-# findall()
-# sub()
+# 123--->integer
+# 123.25--->float
+# "586ddfgjf"--->string
 
 
-#to define the patterns using regex
-# r"pattern"
+# "xyz29832213"
+# "78979xyz7978"
+# "dchdc54645"
 
-# 1.every string should starts with IND
+#here we are having our own patterns for text.
 
-# eg: INDhello, INDwelcome, IND1234,INDok
+#regex.--->
 
-import re 
+#integer,float,string,list,tuple,dictionary,regex.
+import re
 
-# # re.match(pattern,input)
-# x=re.match(r"IND","IND123")
-# if x:
-#     print("it is valid input only")
+# ip1="SBIN1234"
+# ip2="ICICI1234"
+# ip3="AXIS1234"
+# ip4="HDFC1234"
+#regex
+# match()--->it will checks the pattern in the given strin
+# regex string or pattern
+# op=re.match(r"ICICI",ip1)
+
+# if op:
+#     print("it is correct ifsc code")
 # else:
-#     print("invalid input")
-#match method will check only at the starting of the input string
-#to check the prefix of given string
+#     print("it is incorrect ifsc code")
 
-# "SBIN98987"
-# "ICICI0098"
-# "AXIS97987"
 
-# ifsc="SBIN12345"
-# sbiValidate=re.match(r"SBIN",ifsc)
-# iciciValidate=re.match(r"ICICI",ifsc)
-# axisValidate=re.match(r"AXIS",ifsc)
-
-# if sbiValidate:
-#     print("it is valid sbi ifsc")
-# elif iciciValidate :
-#     print("it is valid icici ifsc")
-# elif axisValidate:
-#     print("it is valid axis ifsc")
+# ip1="ICICI1234"
+# if re.match(r"SBIN",ip1):
+#     print("it is sbi ifsc code")
+# elif re.match(r"ICICI",ip1):
+#     print("it is icici ifsc code")
+# elif re.match(r"AXIS",ip1):
+#     print("it is AXIS ifsc code")
+# elif re.match(r"HDFC",ip1):
+#     print("it is hdfc ifsc code")
 # else:
-#     print("invalid ifsc")
-
-# bio="AKhil knows python and sql"
-
-# x=re.search(r"python",bio)
-# # print(x)
-# if x:
-#     print("will hire the person")
-# else:
-#     print("will not hire")
+#     print("invalid ifsc code")
 
 
-# ip1="cat"
-# ip2="cut"
-# ip3="c2t"
-# ip4="blt"
-# ip5="cotokcatch"
-# x=re.match(r"c.t",ip3)
+
+#it can contains any alphabates but 4
+#it can contains any numbers  but 5
+
+#regex->
+# [a-z]{4}
+# [0-9]{5}
+
+#starts with alphabates--> ^
+#ends with number---> $
+
+#user input should starts with any 4 alphabates and ends with any 5 numbers
+
+# ip="CHARANTEJ25869"
+
+# x=re.match(r"^[A-Z]{4,8}[0-9]{5,}$",ip)
 # print(x)
 
+# {m}-->length should be exactly m 
+# {m,}--->length should be minimum m and maximum user wish 
+# {m,n}--->length should be minimum m and maximum n .
 
-#. is basic regex pattern indicates any single character can be present
-#^ indicates pattern/string should starts with
-#$ indicates pattern/string should ends with 
-#[a-z] indicates string should contains any alphabates range
-#{m} indicates length of string
-#{m,} indicates minimum should be m and maximum anything
-#{m,n} indicates max and min length of string
-#[0-9] indicates the range of numbers from 0-9
+# [j-q]
+# [4-9]
+#KOPLM3067Y
+#KKK9996661
+# ip_pan1="DEL903897T"
 
-#input should alweays starts with any numbers
-# ^
-# [0-9]
-# ip="1234567890hello world"
-# ip1="7hello hyderabad"
-# ip2="980hello kukatpally"
+# op_pan=re.match(r"^[A-Z]{5}[0-9]{4}[A-Z]{1}$",ip_pan1)
+# print(op_pan)
+# if op_pan:
+#     print("valid pan number")
+# else:
+#     print("invalid pan number")
 
-# x1=re.match(r"^[0-9]{4}hello",ip2)
+
+# ip1="hello world"
+# ip2="world hello welcome"
+# ip3="hello hyderabad"
+
+# x1=re.search(r"hello",ip1)
 # print(x1)
 
-ip1="10000coders"
-ip2="10000founders"
-ip3="10000developers"
-ip4="10000actors"
-ip5="10000"
+# x2=re.search(r"hello",ip2)
+# print(x2)
 
-x=re.match(r"^[0-9]{1,}[a-z]{2,}$",ip5)
-print(x)
-pan1="AXGHT5202O"
-validate=re.match(r"^[A-Z]{5}[0-9]{4}[A-Z]{1}$",pan1)
-print(validate)
+# x3=re.search(r"hello",ip3)
+# print(x3)
+
+
+
+#to validate input data with our customised patterns.
+
+#match and search
+
+#^,$,[],{}
+
+# mobile_num_pattern=r"^[7-8]{1}[0-9]{9}$"
+# ip="7524179623"
+# op=re.match(mobile_num_pattern,ip)
+# print(op)
+
+
+#username can contains LC,UC,Digits,_ and length
+#  should be in b/w 8 and 15
+
+username_pattern=r"^[A-Za-z0-9_\.]{8,15}$"
+ip="James.999"
+op=re.match(username_pattern,ip)
+# print(op)
+
+
+#strong password.
+
+# password_pattern=r"^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[A-Za-z0-9@._]{9,12}$"
+
+# # (?=.*[A-Z]) --->assure atleast one uppercase in string 
+# # (?=.*[a-z])--->assure atleast one lowercase in string
+# # (?=.*[0-9])--->assure atleast one digit in string
+# pswd="INDIAhello2"
+# pop=re.match(password_pattern,pswd)
+# print(pop)
+
+# email1="harish.tech@gmail." 
+# email2="akhil123.tech@yahoo.in" 
+# email3="_kiran.mgr@10000coders.in" 
+
+# 1.pattern before @
+# 2.pattern after @ 
+# 3.pattern for domain name before and after .
+
+# email_pattern=r"^[A-Za-z0-9._]+@[A-Za-z0-9]+\.[a-zA-Z]{2,}$"
+# op=re.match(email_pattern,email1)
+# print(op)
+
+
+
