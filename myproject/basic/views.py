@@ -154,8 +154,24 @@ def DeleteUserById(request,ref_id):
         return JsonResponse({"status":"error","message":"something went wrong"},status=500)
 
 
+@csrf_exempt
+def job1(request):
+    try:
+        if request.method=="POST":
+            return JsonResponse({"status":"success","message":"job1 applied successfully"})
+        return JsonResponse({"status":"failure","message":"only post method allowed"})
+    except Exception as e:
+        return JsonResponse({"status":"error","message":"something went wrong"},status=500)
 
 
+@csrf_exempt
+def job2(request):
+    try:
+        if request.method=="POST":
+            return JsonResponse({"status":"success","message":"job2 applied successfully"})
+        return JsonResponse({"status":"failure","message":"only post method allowed"})
+    except Exception as e:
+        return JsonResponse({"status":"error","message":"something went wrong"},status=500)
 
 
 

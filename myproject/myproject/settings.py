@@ -52,6 +52,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'basic.middlewares.middleware1',
     'basic.middlewares.middleware2',
+    'basic.middlewares.sscMiddleware',
+    'basic.middlewares.medicallyFitMiddleware',
+    # 'basic.middlewares.ageValidationMiddleware'
 
 ]
 
