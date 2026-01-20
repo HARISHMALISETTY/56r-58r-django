@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'basic.middlewares.middleware2',
     'basic.middlewares.sscMiddleware',
     'basic.middlewares.medicallyFitMiddleware',
+    'basic.middlewares.authMiddleware'
     # 'basic.middlewares.ageValidationMiddleware'
 
 ]

@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from basic.views import job1,job2,DeleteUserById,updateUseragebyId,UpdateUserCityById,createEmployee,createProduct,createData,pagination,home,about,sample,sample1,productInfo,filteringData,filterStudentsByCity
+from basic.views import signup,login,job1,job2,DeleteUserById,updateUseragebyId,UpdateUserCityById,createEmployee,createProduct,createData,pagination,home,about,sample,sample1,productInfo,filteringData,filterStudentsByCity
 from newapp.views import updateOrderStatus,getMoviesByMultipleScreens, getMoviesByScreenname,getMultiplesOrdersByStatus,getStudentsByDegree,orderPlacing,BookMyshow,GetOrders,BookingDetails,getStudentById,getOrdersByStatus
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,7 +46,9 @@ urlpatterns = [
     path('deleteUser/<int:ref_id>',DeleteUserById),
     path('updateStatus/<str:ref_status>',updateOrderStatus),
     path('job1/',job1),
-    path('job2/',job2)
+    path('job2/',job2),
+    path('/signup/',signup),
+    path('/login/',login)
     
 
 

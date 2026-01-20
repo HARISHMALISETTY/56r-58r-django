@@ -3,7 +3,7 @@ from django.http import HttpResponse,JsonResponse
 import math 
 import json
 from django.views.decorators.csrf import csrf_exempt
-from basic.models import userProfile,Employee
+from basic.models import userProfile,Employee,User
 from django.db.utils import IntegrityError
 # Create your views here.
 def home(request):
@@ -158,6 +158,7 @@ def DeleteUserById(request,ref_id):
 def job1(request):
     try:
         if request.method=="POST":
+            
             return JsonResponse({"status":"success","message":"job1 applied successfully"})
         return JsonResponse({"status":"failure","message":"only post method allowed"})
     except Exception as e:
@@ -172,6 +173,30 @@ def job2(request):
         return JsonResponse({"status":"failure","message":"only post method allowed"})
     except Exception as e:
         return JsonResponse({"status":"error","message":"something went wrong"},status=500)
+
+@csrf_exempt
+def signup(request):
+    data = json.loads(request.body)
+
+    user = User.objects.create(
+        username=data["username"],
+        email=data["email"],
+        password=data["password"]
+    )
+
+    return JsonResponse({
+        "status": "success",
+        "msg": "User registered successfully"
+    }, status=201)
+
+
+def login(request):
+
+    return JsonResponse({
+        "status": "success",
+        "msg": "Login successful"
+    })
+
 
 
 

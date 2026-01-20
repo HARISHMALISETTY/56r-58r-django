@@ -12,3 +12,8 @@ class Employee(models.Model):
     emp_email=models.EmailField(unique=True)
 
 #create product model with fields produ_name,price and quantity,totalprice
+
+class User(models.Model):
+    username = models.CharField(max_length=50, unique=True)
+    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=255)
