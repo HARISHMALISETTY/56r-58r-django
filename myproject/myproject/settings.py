@@ -50,10 +50,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'basic.middlewares.middleware1',
-    'basic.middlewares.middleware2',
-    'basic.middlewares.sscMiddleware',
-    'basic.middlewares.medicallyFitMiddleware',
+    # 'basic.middlewares.middleware1',
+    # 'basic.middlewares.middleware2',
+    # 'basic.middlewares.sscMiddleware',
+    # 'basic.middlewares.medicallyFitMiddleware',
     'basic.middlewares.authMiddleware'
     # 'basic.middlewares.ageValidationMiddleware'
 

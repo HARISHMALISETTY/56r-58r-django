@@ -5,6 +5,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from basic.models import userProfile,Employee,User
 from django.db.utils import IntegrityError
+from django.contrib.auth.hashers import make_password,check_password
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -177,11 +178,11 @@ def job2(request):
 @csrf_exempt
 def signup(request):
     data = json.loads(request.body)
-
+    hashed_password=make_password(data["password"])
     user = User.objects.create(
         username=data["username"],
         email=data["email"],
-        password=data["password"]
+        password=hashed_password
     )
 
     return JsonResponse({
@@ -189,12 +190,16 @@ def signup(request):
         "msg": "User registered successfully"
     }, status=201)
 
-
+@csrf_exempt
 def login(request):
+    user_info=json.loads(request.body)
+    user=user_info.get("username")
 
     return JsonResponse({
+
         "status": "success",
-        "msg": "Login successful"
+        "msg": "Login successful",
+        "greetings":f"welcome {user}"
     })
 
 

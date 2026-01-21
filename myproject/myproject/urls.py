@@ -47,8 +47,8 @@ urlpatterns = [
     path('updateStatus/<str:ref_status>',updateOrderStatus),
     path('job1/',job1),
     path('job2/',job2),
-    path('/signup/',signup),
-    path('/login/',login)
+    path('signup/',signup),
+    path('login/',login)
     
 
 
