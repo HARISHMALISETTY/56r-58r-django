@@ -115,6 +115,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JWT_SECRET_KEY = "mydjango-project-key"
+JWT_ALGORITHM = "HS256"
+JWT_EXP_TIME = 60 * 60   # 1 hour
+
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/

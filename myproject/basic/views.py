@@ -6,6 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 from basic.models import userProfile,Employee,User
 from django.db.utils import IntegrityError
 from django.contrib.auth.hashers import make_password,check_password
+import jwt
+from datetime import datetime, timedelta
+from django.conf import settings
+
 # Create your views here.
 def home(request):
     return render(request,'home.html')
@@ -182,7 +186,8 @@ def signup(request):
     user = User.objects.create(
         username=data["username"],
         email=data["email"],
-        password=hashed_password
+        password=hashed_password,
+        role=data["role"]
     )
 
     return JsonResponse({
@@ -193,14 +198,55 @@ def signup(request):
 @csrf_exempt
 def login(request):
     user_info=json.loads(request.body)
-    user=user_info.get("username")
+    username=user_info.get("username")
+    user_existing_info=list(User.objects.filter(username=username).values())
+    print(user_existing_info)
+    
+    payload={
+        "username":username,
+        "iat": datetime.utcnow(),
+        "role":user_existing_info[0].get("role"),
+        "exp": datetime.utcnow() + timedelta(seconds=settings.JWT_EXP_TIME)}
+
+    token=jwt.encode(payload,settings.JWT_SECRET_KEY,algorithm=settings.JWT_ALGORITHM)
 
     return JsonResponse({
 
         "status": "success",
         "msg": "Login successful",
-        "greetings":f"welcome {user}"
+        "greetings":f"welcome {username}",
+        "token":token
     })
+@csrf_exempt
+def protected_api(request):
+    try:
+        if request.method=="POST":
+            auth_header = request.headers.get("Authorization")
+            token=auth_header.split(" ")[1]
+            print(token[1]) #readig token from input
+            if not auth_header:
+                return JsonResponse(
+                    {"msg": "Authorization header missing"},
+                    status=401
+                )
+            try:
+                # print(auth_header)
+                decoded_payload = jwt.decode(
+                                    token,
+                                    settings.JWT_SECRET_KEY,
+                                    algorithms=[settings.JWT_ALGORITHM]
+                                    )
+                print(decoded_payload)
+                if decoded_payload.get("role")=="admin":
+                    return JsonResponse({"msg":"u have access for this api"})
+                else:
+                    return JsonResponse({"msg":"u have not access for this api"},status=401) 
+                return JsonResponse({"msg":"successfully token recieved"})
+            except Exception as e:
+                return JsonResponse({"msg":"something went wrong","error":e})
+        return JsonResponse({"msg":"done"})
+    except:
+        return JsonResponse({"msg":"only post method allowed"})
 
 
 
